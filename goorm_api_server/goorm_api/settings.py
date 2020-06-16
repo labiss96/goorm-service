@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth',
     'allauth.account',
-    'user'
-    
+    'user',
+    'product',
 ]
 
 MIDDLEWARE = [
