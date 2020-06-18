@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import MenuAppbar from "./components/MenuAppBar.jsx";
+import Main from "./components/Main";
 import "./App.css";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div className="main">
       <MenuAppbar />
       <Container maxWidth="lg">
-        <p>Goorm Service</p>
+        <Main />
       </Container>
     </div>
   );
