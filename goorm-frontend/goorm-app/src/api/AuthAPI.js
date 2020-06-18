@@ -10,4 +10,8 @@ export default {
   getUsers() {
     return axios.get(`rest-auth/user/`);
   },
+  authLogin(data) {
+    console.log("run login API.");
+    return axios.post("rest-auth/login/", data);
+  },
 };
