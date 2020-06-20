@@ -8,7 +8,14 @@ class Main extends Component {
       username: "",
       email: "",
       password: "",
+      logged: false,
     };
+  }
+
+  componentDidMount() {
+    if (window.sessionStorage.getItem("token") != null) {
+      this.setState({ logged: true });
+    }
   }
 
   handlingChange = (event) => {
@@ -30,14 +37,37 @@ class Main extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-    await auth_api.authLogin(data).then((result) => {
-      console.log(result);
-      this.setState({
-        username: "",
-        email: "",
-        password: "",
+    await auth_api
+      .authLogin(data)
+      .then((result) => {
+        console.log(result);
+        console.log("token :", result.data.key);
+        window.sessionStorage.setItem("token", result.data.key);
+        this.setState({
+          username: "",
+          email: "",
+          password: "",
+          logged: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
+  };
+
+  logout = async () => {
+    await auth_api
+      .authLogout()
+      .then((result) => {
+        console.log(result);
+        window.sessionStorage.clear();
+        this.setState({
+          logged: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -45,6 +75,7 @@ class Main extends Component {
       <div>
         <p>username : {this.state.username}</p>
         <Button onClick={this.getUserList}>getUser</Button>
+        <Button onClick={this.logout}>Logout</Button>
         <hr />
         <h2>Login</h2>
         username

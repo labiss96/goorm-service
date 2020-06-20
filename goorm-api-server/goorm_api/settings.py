@@ -131,24 +131,36 @@ USE_TZ = True
 STATIC_URL = '/static/'
 SITE_ID = 1
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+# # ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_USER_EMAIL_FIELD = 'email'
-ACCOUNT_LOGOUT_ON_GET = True
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
+# # ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_USER_EMAIL_FIELD = 'email'
+# ACCOUNT_LOGOUT_ON_GET = True
 
 AUTH_USER_MODEL = 'user.User'
 
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "user.serializers.CustomUserDetailsSerializer",
 }
-REST_AUTH_REGISTER_SERIALIZERS = {
-    "REGISTER_SERIALIZER": "user.serializers.CustomRegisterSerializer",
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     "REGISTER_SERIALIZER": "user.serializers.CustomRegisterSerializer",
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
 
+# REST_USE_JWT = True
 
 CORS_ORIGIN_ALLOW_ALL = True #develop setting
 CORS_ALLOW_CREDENTIALS = True
