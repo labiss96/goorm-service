@@ -41,8 +41,8 @@ class Main extends Component {
       .authLogin(data)
       .then((result) => {
         console.log(result);
-        console.log("token :", result.data.key);
-        window.sessionStorage.setItem("token", result.data.key);
+        console.log("token :", result.data.token);
+        window.sessionStorage.setItem("token", result.data.token);
         this.setState({
           username: "",
           email: "",
@@ -83,14 +83,6 @@ class Main extends Component {
           type="text"
           name="username"
           value={this.state.username}
-          onChange={this.handlingChange}
-        />
-        <br />
-        email
-        <input
-          type="email"
-          name="email"
-          value={this.state.email}
           onChange={this.handlingChange}
         />
         <br />

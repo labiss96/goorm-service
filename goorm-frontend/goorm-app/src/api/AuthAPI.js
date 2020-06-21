@@ -6,19 +6,19 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default {
   registerUser() {
-    return axios.get(`rest-auth/registration/`);
+    return axios.get(`auth/register/`);
   },
 
   getUsers() {
-    return axios.get(`rest-auth/user/`, tokenConfig());
+    return axios.get(`auth/user/`, tokenConfig());
   },
 
   authLogin(data) {
     console.log("run login API.");
-    return axios.post("rest-auth/login/", data);
+    return axios.post("auth/login/", data);
   },
   authLogout() {
     console.log("run logout API.");
-    return axios.post("rest-auth/logout/", null, tokenConfig());
+    return axios.post("auth/logout/", null, tokenConfig());
   },
 };

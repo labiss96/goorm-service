@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&#b69bk!gt9wg^=47&nb-8$57f(#=8l_l6%v$3jurpme-0vx_0'
+SECRET_KEY = 'g63q$v$oe_bj#x_6kw!^_$=o8+-1#xfh6+_v9swi4-s)z5q4_='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,16 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'corsheaders',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'rest_auth.registration',
-    'allauth',
-    'allauth.account',
     'user',
-    'product',
+    'rest_framework',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -129,38 +124,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-SITE_ID = 1
-
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-# # ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_UNIQUE_EMAIL = True
-# # ACCOUNT_USERNAME_REQUIRED = True
-# ACCOUNT_USER_EMAIL_FIELD = 'email'
-# ACCOUNT_LOGOUT_ON_GET = True
-
-AUTH_USER_MODEL = 'user.User'
-
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "user.serializers.CustomUserDetailsSerializer",
-}
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     "REGISTER_SERIALIZER": "user.serializers.CustomRegisterSerializer",
-# }
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
-
-# REST_USE_JWT = True
 
 CORS_ORIGIN_ALLOW_ALL = True #develop setting
 CORS_ALLOW_CREDENTIALS = True
+
+AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+}
