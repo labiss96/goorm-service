@@ -1,21 +1,14 @@
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import auth_api from "../api/AuthAPI";
+import AuthContext from "../context/AuthContext";
+
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      logged: false,
-    };
-  }
+  static contextType = AuthContext;
 
   componentDidMount() {
-    if (window.sessionStorage.getItem("token") != null) {
-      this.setState({ logged: true });
-    }
+    console.log(this.context);
+    console.log(this.context.logged);
   }
 
   handlingChange = (event) => {
@@ -31,39 +24,13 @@ class Main extends Component {
       .catch((err) => console.log(err));
   };
 
-  login = async () => {
-    var data = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-    };
-    await auth_api
-      .authLogin(data)
-      .then((result) => {
-        console.log(result);
-        console.log("token :", result.data.token);
-        window.sessionStorage.setItem("token", result.data.token);
-        this.setState({
-          username: "",
-          email: "",
-          password: "",
-          logged: true,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   logout = async () => {
     await auth_api
       .authLogout()
       .then((result) => {
         console.log(result);
         window.sessionStorage.clear();
-        this.setState({
-          logged: false,
-        });
+        this.context.onLogout();
       })
       .catch((err) => {
         console.log(err);
@@ -73,27 +40,12 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <p>username : {this.state.username}</p>
         <Button onClick={this.getUserList}>getUser</Button>
         <Button onClick={this.logout}>Logout</Button>
+        <p>
+          현재 상태 : {this.context.logged === true ? <>True</> : <>False</>}
+        </p>
         <hr />
-        <h2>Login</h2>
-        username
-        <input
-          type="text"
-          name="username"
-          value={this.state.username}
-          onChange={this.handlingChange}
-        />
-        <br />
-        PW
-        <input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handlingChange}
-        />
-        <Button onClick={this.login}>Login!</Button>
       </div>
     );
   }

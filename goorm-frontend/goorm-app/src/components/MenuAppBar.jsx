@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 import {
   makeStyles,
   AppBar,
@@ -6,12 +8,8 @@ import {
   Typography,
   IconButton,
   Button,
-  Switch,
-  FormControlLabel,
-  FormGroup,
   MenuItem,
   Menu,
-  Link,
 } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -28,16 +26,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-
 export default function MenuAppBar() {
+  const value = useContext(AuthContext);
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
+  // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -49,18 +47,18 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <FormGroup>
+      {/* <FormGroup>
         <FormControlLabel
           control={
             <Switch
-              checked={auth}
-              onChange={handleChange}
+              checked={value}
+              // onChange={handleChange}
               aria-label="login switch"
             />
           }
-          label={auth ? "Logout" : "Login"}
+          label={value ? "Logout" : "Login"}
         />
-      </FormGroup>
+      </FormGroup> */}
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -71,10 +69,19 @@ export default function MenuAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            component={Link}
+            to="/"
+            style={{
+              textDecoration: "inherit",
+              color: "inherit",
+            }}
+          >
             Goorm Service
           </Typography>
-          {auth ? (
+          {value.logged ? (
             <div>
               <IconButton
                 aria-label="account of current user"
