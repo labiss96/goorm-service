@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import React from "react";
+import { Link } from "react-router-dom";
+import Store from "store";
+import auth_api from "api/AuthAPI";
 import {
   makeStyles,
   AppBar,
@@ -27,15 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function MenuAppBar() {
-  const value = useContext(AuthContext);
   const classes = useStyles();
-  // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  // const handleChange = (event) => {
-  //   setAuth(event.target.checked);
-  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,21 +39,23 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logout = async (event, onLogout) => {
+    setAnchorEl(null);
+
+    await auth_api
+      .authLogout()
+      .then((result) => {
+        console.log(result);
+        window.sessionStorage.clear();
+        onLogout();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={classes.root}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={value}
-              // onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={value ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -81,64 +78,73 @@ export default function MenuAppBar() {
           >
             Goorm Service
           </Typography>
-          {value.logged ? (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <>
-              <Button
-                color="inherit"
-                size="large"
-                component={Link}
-                to="/login"
-                style={{
-                  textDecoration: "inherit",
-                  color: "inherit",
-                }}
-              >
-                Login
-              </Button>
-              <Button
-                color="inherit"
-                size="large"
-                component={Link}
-                to="/register"
-                style={{
-                  textDecoration: "inherit",
-                  color: "inherit",
-                }}
-              >
-                Register
-              </Button>
-            </>
-          )}
+          <Store.Consumer>
+            {(store) => (
+              <>
+                {store.logged ? (
+                  <>
+                    <IconButton
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenu}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={(e) => logout(e, store.onLogout)}>
+                        logout
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      color="inherit"
+                      size="large"
+                      component={Link}
+                      to="/login"
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                      }}
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      color="inherit"
+                      size="large"
+                      component={Link}
+                      to="/register"
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                      }}
+                    >
+                      Register
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
+          </Store.Consumer>
         </Toolbar>
       </AppBar>
     </div>
