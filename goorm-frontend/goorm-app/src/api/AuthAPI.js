@@ -5,8 +5,8 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default {
-  registerUser() {
-    return axios.get(`auth/register/`);
+  authRegister(data) {
+    return axios.post("auth/register/", data);
   },
 
   getUsers() {

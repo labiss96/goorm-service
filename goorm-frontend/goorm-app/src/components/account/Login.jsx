@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import auth_api from "../api/AuthAPI";
+import auth_api from "../../api/AuthAPI";
 import Store from "store";
 import {
   Container,
@@ -138,7 +138,7 @@ class Login extends Component {
                     color="secondary"
                     className={classes.button}
                     component={Link}
-                    to={`admission/apply/`}
+                    to={`register/`}
                   >
                     Join us
                   </Button>

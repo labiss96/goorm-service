@@ -78,6 +78,18 @@ export default function MenuAppBar() {
           >
             Goorm Service
           </Typography>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            component={Link}
+            to="/product"
+            style={{
+              textDecoration: "inherit",
+              color: "inherit",
+            }}
+          >
+            Product
+          </Typography>
           <Store.Consumer>
             {(store) => (
               <>
@@ -108,9 +120,8 @@ export default function MenuAppBar() {
                       onClose={handleClose}
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
                       <MenuItem onClick={(e) => logout(e, store.onLogout)}>
-                        logout
+                        Logout
                       </MenuItem>
                     </Menu>
                   </>
