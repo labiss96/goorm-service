@@ -31,6 +31,7 @@ export default {
   },
   createTobacco(data) {
     console.log("run create Tobacco API.");
+    console.log(data);
     return axios.post("product/tobacco/", data, tokenConfig());
   },
   updateTobacco(data, id) {

@@ -78,23 +78,24 @@ export default function MenuAppBar() {
           >
             Goorm Service
           </Typography>
-          <Typography
-            variant="h6"
-            className={classes.title}
-            component={Link}
-            to="/product"
-            style={{
-              textDecoration: "inherit",
-              color: "inherit",
-            }}
-          >
-            Product
-          </Typography>
           <Store.Consumer>
             {(store) => (
               <>
                 {store.logged ? (
                   <>
+                    <Button
+                      color="inherit"
+                      size="large"
+                      component={Link}
+                      to="/product"
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                        flexGrow: 0,
+                      }}
+                    >
+                      Product
+                    </Button>
                     <IconButton
                       aria-label="account of current user"
                       aria-controls="menu-appbar"

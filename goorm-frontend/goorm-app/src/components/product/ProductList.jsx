@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import product_api from "api/ProductAPI";
 
 class ProductList extends Component {
@@ -23,11 +24,11 @@ class ProductList extends Component {
 
   render() {
     return (
-      <div>
-        <Button onClick={this.getUserList}>Add product</Button>
+      <Container maxWidth="lg">
+        <Link to="/product/new">Add product</Link>
         <hr />
         {this.state.tobacco_list.map((tobacco) => JSON.stringify(tobacco))}
-      </div>
+      </Container>
     );
   }
 }
