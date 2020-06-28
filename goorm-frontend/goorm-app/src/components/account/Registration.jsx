@@ -88,7 +88,6 @@ class Registration extends React.Component {
   doSignup = (id, name, token) => {
     window.sessionStorage.setItem("id", id);
     window.sessionStorage.setItem("username", name);
-    // window.sessionStorage.setItem("user_img", img);
     window.sessionStorage.setItem("token", token);
     console.log("token in session : ", window.sessionStorage.getItem("token"));
   };

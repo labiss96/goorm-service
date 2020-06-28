@@ -13,3 +13,6 @@ class User(AbstractUser):
     )
     user_type = models.CharField(max_length=15, choices=STATUS, default=NON_MEMBER)
     # img = models.ImageField(upload_to='images/', default='../static/images/default_profile_img.png')
+
+    def __str__(self):
+        return self.username

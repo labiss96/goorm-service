@@ -7,6 +7,8 @@ import Profile from "./components/account/Profile";
 import Registration from "./components/account/Registration";
 import ProductList from "./components/product/ProductList";
 import ProductForm from "./components/product/ProductForm";
+import ProductDetail from "./components/product/ProductDetail.jsx";
+import AUTH_API from "api/AuthAPI";
 import Store from "store";
 
 class Goorm extends Component {
@@ -21,6 +23,11 @@ class Goorm extends Component {
         <Route path="/profile" component={Profile} />
         <Route exact path="/product" component={ProductList} />
         <Route path="/product/new" component={ProductForm} />
+        <Route
+          path="/product/detail/:id"
+          id="number"
+          component={ProductDetail}
+        />
       </Router>
     );
   }
@@ -46,12 +53,22 @@ class App extends Component {
     };
   }
 
-  componentDidMount = () => {
-    if (window.sessionStorage.getItem("token") != null) {
+  componentDidMount = async () => {
+    var token = window.sessionStorage.getItem("token");
+    if (token != null) {
       this.setState({
         logged: true,
       });
     }
+
+    await AUTH_API.getUsers()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        this._onLogout();
+      });
   };
 
   render() {

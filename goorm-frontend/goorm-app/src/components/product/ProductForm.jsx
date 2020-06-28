@@ -87,7 +87,7 @@ class ProductForm extends Component {
           nicotine: this.state.nicotine,
           tar: this.state.tar,
           throat_hit: this.state.throat_hit,
-          isMenthol: this.state.isMenthol,
+          is_menthol: this.state.isMenthol,
           brand: this.state.brand,
         })
         .then((result) => {
