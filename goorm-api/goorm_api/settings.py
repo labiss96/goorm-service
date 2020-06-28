@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'knox',
     'user',
     'product',
+    'clinic',
 ]
 
 MIDDLEWARE = [
