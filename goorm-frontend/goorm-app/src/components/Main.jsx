@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import auth_api from "../api/AuthAPI";
 import Store from "store";
 
@@ -20,15 +20,24 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
-        <Button onClick={this.getUserList}>getUser</Button>
+      <Container maxWidth="lg">
         <p>
           <Store.Consumer>
-            {(store) => JSON.stringify(store.logged)}
+            {(store) =>
+              store.logged ? (
+                <>
+                  <h1>Welcome to Goorm Service</h1>
+                </>
+              ) : (
+                <>
+                  <h1>Welcome to Goorm Service</h1>
+                  <h2>회원가입 및 로그인 후 서비스를 제공받을 수 있습니다.</h2>
+                </>
+              )
+            }
           </Store.Consumer>
         </p>
-        <hr />
-      </div>
+      </Container>
     );
   }
 }

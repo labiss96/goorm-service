@@ -9,7 +9,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
 } from "@material-ui/core";
-import { Avatar, Divider, IconButton, Badge } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import SmokingRoomsIcon from "@material-ui/icons/SmokingRooms";
 
 const useStyles = (theme) => ({

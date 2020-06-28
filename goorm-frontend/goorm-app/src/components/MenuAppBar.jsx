@@ -96,6 +96,19 @@ export default function MenuAppBar() {
                     >
                       Product
                     </Button>
+                    <Button
+                      color="inherit"
+                      size="large"
+                      component={Link}
+                      to="/clinic"
+                      style={{
+                        textDecoration: "inherit",
+                        color: "inherit",
+                        flexGrow: 0,
+                      }}
+                    >
+                      Clinic
+                    </Button>
                     <IconButton
                       aria-label="account of current user"
                       aria-controls="menu-appbar"

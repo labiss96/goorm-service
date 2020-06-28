@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import product_api from "api/ProductAPI";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -11,10 +11,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 export default function BrandFormDialog(props) {
   const [open, setOpen] = useState(false);
   const [brand, setBrand] = useState("");
-
-  //   useEffect(() => {
-
-  //   });
 
   const handleClickOpen = () => {
     setOpen(true);

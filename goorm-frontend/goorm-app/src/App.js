@@ -5,9 +5,15 @@ import Main from "./components/Main";
 import Login from "./components/account/Login";
 import Profile from "./components/account/Profile";
 import Registration from "./components/account/Registration";
+
 import ProductList from "./components/product/ProductList";
 import ProductForm from "./components/product/ProductForm";
 import ProductDetail from "./components/product/ProductDetail.jsx";
+
+import ClinicList from "./components/clinic/ClinicList";
+import ClinicForm from "./components/clinic/ClinicForm";
+import ClinicDetail from "./components/clinic/ClinicDetail";
+
 import AUTH_API from "api/AuthAPI";
 import Store from "store";
 
@@ -28,6 +34,10 @@ class Goorm extends Component {
           id="number"
           component={ProductDetail}
         />
+
+        <Route exact path="/clinic" component={ClinicList} />
+        <Route path="/clinic/new" component={ClinicForm} />
+        <Route path="/clinic/detail/:id" id="number" component={ClinicDetail} />
       </Router>
     );
   }
@@ -64,6 +74,7 @@ class App extends Component {
     await AUTH_API.getUsers()
       .then((result) => {
         console.log(result);
+        window.sessionStorage.setItem("user_type", result.data.user_type);
       })
       .catch((err) => {
         console.log(err);
