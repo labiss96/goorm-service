@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import product_api from "api/ProductAPI";
-
+import ProductView from "./ProductView";
 class ProductList extends Component {
   state = {
     tobacco_list: [],
@@ -20,14 +21,24 @@ class ProductList extends Component {
       })
       .catch((err) => console.log(err));
   };
-
+  // JSON.stringify(tobacco);
   render() {
     return (
-      <div>
-        <Button onClick={this.getUserList}>Add product</Button>
+      <Container maxWidth="lg">
+        <br />
+        <Button
+          variant="contained"
+          color="secondary"
+          component={Link}
+          to="/product/new"
+        >
+          Add product
+        </Button>
         <hr />
-        {this.state.tobacco_list.map((tobacco) => JSON.stringify(tobacco))}
-      </div>
+        {this.state.tobacco_list.map((tobacco, index) => (
+          <ProductView key={index} productInfo={tobacco} />
+        ))}
+      </Container>
     );
   }
 }

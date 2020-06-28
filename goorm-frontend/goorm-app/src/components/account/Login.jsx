@@ -64,6 +64,7 @@ class Login extends Component {
       .then((result) => {
         console.log("로그인 성공!", result);
         window.sessionStorage.setItem("token", result.data.token);
+        window.sessionStorage.setItem("user_id", result.data.user.id);
         onLogin();
       })
       .catch((err) => {

@@ -21,4 +21,8 @@ export default {
     console.log("run logout API.");
     return axios.post("auth/logout/", null, tokenConfig());
   },
+  certifyAdult(data) {
+    console.log("run certifyAdult API.");
+    return axios.post("certify/", data);
+  },
 };

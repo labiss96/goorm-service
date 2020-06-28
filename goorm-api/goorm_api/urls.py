@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib import admin
 from knox import views as knox_views
-from user.views import RegistrationAPI, LoginAPI, UserAPI
+from user.views import RegistrationAPI, LoginAPI, UserAPI, CertifyAPI
 import product.urls
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path("auth/logout/", knox_views.LogoutView.as_view(), name='knox_logout'),
     path("auth/user/", UserAPI.as_view(),name="token_validate"),
     path('product/',include(product.urls)),
+    path('certify/', CertifyAPI),
 ]

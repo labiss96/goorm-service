@@ -1,16 +1,42 @@
 # from django.shortcuts import render
-
+import json
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from knox.models import AuthToken
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from django.contrib.auth import get_user_model
 
-# # Create your views here.
-# @api_view(["GET"])
-# def HelloAPI(request):
-#     return Response("hello world!")
+User = get_user_model()
+
+
+@api_view(["POST"])
+def CertifyAPI(request):
+    json_userdata = request.body
+    userdata = json.loads(json_userdata)
+
+    birth = userdata['birth'].split('-')
+    user_id = userdata['user_id']
+    name = userdata['name']
+    
+    # print(birth)
+    
+    year = birth[0]
+    month = birth[1]
+    day = birth[2]
+
+    user_object = User.objects.get(id=user_id)
+
+    if int(year) < 2001:
+        user_object.user_type = 'member'
+        user_object.save()
+        print(user_object)
+        return Response({'result' : 'accept'})
+    else:
+        return Response({'result' : 'reject'})   
+
 
 class RegistrationAPI(generics.GenericAPIView):
     serializer_class = CreateUserSerializer
@@ -54,4 +80,4 @@ class UserAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-        return self.request.user
+        return self.request.user 

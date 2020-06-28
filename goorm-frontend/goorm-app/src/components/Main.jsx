@@ -12,6 +12,7 @@ class Main extends Component {
     await auth_api
       .getUsers()
       .then((result) => {
+        //test
         console.log(result);
       })
       .catch((err) => console.log(err));

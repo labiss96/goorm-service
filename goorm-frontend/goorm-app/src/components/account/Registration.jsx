@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
@@ -44,6 +44,7 @@ class Registration extends React.Component {
     repassword: "",
     email: "",
     userImg: "",
+    is_successful: false,
   };
 
   handlingChange = (event) => {
@@ -78,6 +79,7 @@ class Registration extends React.Component {
           password: "",
           repassword: "",
           email: "",
+          is_successful: true,
         });
       })
       .catch((err) => console.log(err));
@@ -86,7 +88,6 @@ class Registration extends React.Component {
   doSignup = (id, name, token) => {
     window.sessionStorage.setItem("id", id);
     window.sessionStorage.setItem("username", name);
-    // window.sessionStorage.setItem("user_img", img);
     window.sessionStorage.setItem("token", token);
     console.log("token in session : ", window.sessionStorage.getItem("token"));
   };
@@ -95,96 +96,101 @@ class Registration extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Container maxWidth="xs" className="signup-container">
-        <Paper className={classes.paper} elevation={0}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Welcome to Goorm Service!
-          </Typography>
-          <form onSubmit={this.handlingSubmit} className={classes.form}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  label="username"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.handlingChange}
-                  required
-                  fullWidth
-                  autoFocus
-                />
+      <>
+        {this.state.is_successful ? <Redirect to="/login" /> : <></>}
+        <Container maxWidth="xs" className="signup-container">
+          <Paper className={classes.paper} elevation={0}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Welcome to Goorm Service!
+            </Typography>
+            <form onSubmit={this.handlingSubmit} className={classes.form}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    label="username"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handlingChange}
+                    required
+                    fullWidth
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.handlingChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="repassword"
+                    label="Confirm Password"
+                    type="password"
+                    value={this.state.repassword}
+                    onChange={this.handlingChange}
+                    error={
+                      this.state.password === this.state.repassword
+                        ? false
+                        : true
+                    }
+                    helperText={
+                      this.state.password === this.state.repassword
+                        ? ""
+                        : "incorrect!"
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <hr />
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    className={classes.center}
+                  >
+                    Additional Info
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    type="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={this.state.email}
+                    onChange={this.handlingChange}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.handlingChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="repassword"
-                  label="Confirm Password"
-                  type="password"
-                  value={this.state.repassword}
-                  onChange={this.handlingChange}
-                  error={
-                    this.state.password === this.state.repassword ? false : true
-                  }
-                  helperText={
-                    this.state.password === this.state.repassword
-                      ? ""
-                      : "incorrect!"
-                  }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <hr />
-                <Typography
-                  component="h1"
-                  variant="h5"
-                  className={classes.center}
-                >
-                  Additional Info
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  type="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={this.state.email}
-                  onChange={this.handlingChange}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-          </form>
-          <Link to="/">Cancel</Link>
-        </Paper>
-      </Container>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+            </form>
+            <Link to="/">Cancel</Link>
+          </Paper>
+        </Container>
+      </>
     );
   }
 }

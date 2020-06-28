@@ -31,6 +31,7 @@ export default {
   },
   createTobacco(data) {
     console.log("run create Tobacco API.");
+    console.log(data);
     return axios.post("product/tobacco/", data, tokenConfig());
   },
   updateTobacco(data, id) {
@@ -44,5 +45,23 @@ export default {
   getTobacco(id) {
     console.log("run get Tobacco API.");
     return axios.get(`product/tobacco/${id}/`, tokenConfig());
+  },
+
+  //Review API
+  getReviews(tobacco_id) {
+    console.log("run get Reviews API.");
+    return axios.get(
+      `product/tobacco/${tobacco_id}/get_reviews/`,
+      tokenConfig()
+    );
+  },
+  createReview(data) {
+    console.log("run create Review API", data);
+    return axios.post("product/review/", data, tokenConfig());
+  },
+
+  deleteReview(id) {
+    console.log("run delete Review API.");
+    return axios.delete(`product/review/${id}/`, tokenConfig());
   },
 };
