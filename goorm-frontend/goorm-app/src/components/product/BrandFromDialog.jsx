@@ -30,6 +30,7 @@ export default function BrandFormDialog(props) {
       .then((result) => {
         console.log(result);
         handleClose();
+        setBrand("");
         props.get_brands();
       })
       .catch((err) => console.log(err));

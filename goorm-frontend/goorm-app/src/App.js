@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import MenuAppbar from "./components/MenuAppBar.jsx";
 import Main from "./components/Main";
 import Login from "./components/account/Login";
+import Profile from "./components/account/Profile";
 import Registration from "./components/account/Registration";
 import ProductList from "./components/product/ProductList";
 import ProductForm from "./components/product/ProductForm";
@@ -17,6 +18,7 @@ class Goorm extends Component {
         <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
+        <Route path="/profile" component={Profile} />
         <Route exact path="/product" component={ProductList} />
         <Route path="/product/new" component={ProductForm} />
       </Router>
